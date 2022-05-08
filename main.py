@@ -139,5 +139,6 @@ def get_img(date):
     strs = str(date) + '/' + username
     return render_template('img.html', photo=strs)
 
+
 if __name__ == '__main__':
     main()

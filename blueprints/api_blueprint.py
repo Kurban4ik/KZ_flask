@@ -4,6 +4,7 @@ import os
 from flask import Blueprint, request
 from flask_restful import Api, Resource, reqparse
 
+from changer import pixelator, liner, nihil
 from data import db_session
 from data.photos import News
 from data.users import User
@@ -38,21 +39,42 @@ class NewsApi(Resource):
         return {'error': 'i shitted in my pants'}
 
     def post(self):
+        print(123)
         db_sessi = db_session.create_session()
         args = request.form
         login = args['login']
+
         password = args['password']
+
         for i in db_sessi.query(User).all():
             if i.check_password(password) and i.email == login:
+                print(i.email)
+                news = News()
                 file = request.files['file']
                 # проверка на формат
-                if request.files["file"].content_type.split('/')[-1] not in ['png', 'jpg', 'jpeg']:
-                    return {'response': 'wrong format: png, jpg, jpeg allowed only'}, 503
+                print(file.filename)
+                if request.files["file"].filename.split('.')[-1] not in ['png', 'jpg', 'jpeg']:
+                    return {'response': 'wrong format: png, jpg, jpeg allowed only'}
                 filters = args['filter']
                 now = datetime.datetime.now()
                 now = str(now.day) + str(now.hour) + str(now.minute) + str(now.second)
                 print(i.email)
-                file.save('./blueprints/' + file.filename)
+                news.filter = filters
+                news.user = i
+                os.mkdir(f'./static/inner/{now}')
+                file.save(os.path.join(f'./static/inner/{now}', file.filename))
+                if filters == '1':
+                    pixelator(now, file.filename)
+                elif filters == '2':
+                    liner(now, file.filename)
+                else:
+                    nihil(now, file.filename)
+                news.user_id = i.id
+                news.is_private = args['is_private']
+                news.created_date = datetime.datetime.now()
+                news.photo = now + file.filename
+                i.news.append(news)
+                db_sessi.merge(i)
                 return {'response': 'ok'}
 
 

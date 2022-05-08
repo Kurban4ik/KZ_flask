@@ -21,15 +21,16 @@ def pixelator(date, file):
                         pixel[i, j + r] = margin_color
 
         return image
+
     image = Image.open(f'static/inner/{date}/{file}').convert('RGB')
-    for size in (image.size[0]//100, ):
+    for size in (image.size[0] // 100,):
         image_pixelate = pixelate(image, pixel_size=size)
         os.mkdir(f'static/images/{date}')
         image_pixelate.save(str(f'static/images/{date}/{file}').format(size))
 
 
 def liner(date, file):
-    image = Image.open(f'static/inner/{date}/{file}').format('RGB')
+    image = Image.open(f'static/inner/{date}/{file}').convert('RGB')
     pix = image.load()
     W, H = image.size
     for y in range(H):
@@ -47,7 +48,7 @@ def liner(date, file):
 
 
 def nihil(date, file):
-    image = Image.open(f'static/inner/{date}/{file}').format('RGB')
+    image = Image.open(f'static/inner/{date}/{file}').convert('RGB')
     pix = image.load()
     W, H = image.size
     change = [random.randint(1, 250), random.randint(1, 250), random.randint(1, 250)]
