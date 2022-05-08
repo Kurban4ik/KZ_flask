@@ -135,7 +135,6 @@ def index():
 @app.route('/img/<int:date>')
 def get_img(date):
     username = request.args.get('name')
-    print(username)
     strs = str(date) + '/' + username
     return render_template('img.html', photo=strs)
 

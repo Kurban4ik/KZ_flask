@@ -13,7 +13,7 @@
         Автор - {{ item.user.name }}, Дата написания - {{ item.created_date }}
     </div>
     <p class="fig">
-    <img src="{{ url_for('static', filename='images/' + item.photo) }}" width="100" height="111" alt="фото"></p>
+        <a href="{{ 'http://127.0.0.1:5000/' + url_for('static', filename='images/' + item.photo) }}"><img src="{{ url_for('static', filename='images/' + item.photo) }}" width="100" height="111" alt="фото"></a></p>
     {% if current_user.is_authenticated and current_user == item.user %}
     <div>
         <a href="/news_delete/{{ item.id }}" class="btn btn-danger">Удалить</a>
