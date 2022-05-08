@@ -1,6 +1,28 @@
-import requests
+import datetime
 
-files = {'file': open("input.jpg", "rb")}
+import vk_api
+LOGIN, PASSWORD = '89298661993', '1598753246Лдфцф'
 
-param = {'login': 'kira297@bk.ru', 'password': '123123', 'filter': '3'}
-print(requests.post(f'http://127.0.0.1:5000/api/news', data=param, files=files).json())
+def unixtime_to_time(unix):
+    value = datetime.datetime.fromtimestamp(unix)
+    return value.strftime('date: %Y-%m-%d, time: %H:%M:%S')
+
+
+def main():
+    login, password = LOGIN, PASSWORD
+    vk_session = vk_api.VkApi(login, password)
+    try:
+        vk_session.auth(token_only=True)
+    except vk_api.AuthError as error_msg:
+        print(error_msg)
+        return
+
+    vk = vk_session.get_api()
+    response = vk.wall.get(count=5, offset=1)
+    if response['items']:
+        for item in response['items']:
+            print(f'{item["text"]};\n{unixtime_to_time(item["date"])}')
+
+
+if __name__ == '__main__':
+    main()
