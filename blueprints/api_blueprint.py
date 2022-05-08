@@ -4,7 +4,7 @@ import os
 from flask import Blueprint, request
 from flask_restful import Api, Resource, reqparse
 
-from changer import pixelator, liner, nihil
+from changer import pixelator, liner, nihil, edges
 from data import db_session
 from data.photos import News
 from data.users import User
@@ -67,6 +67,8 @@ class NewsApi(Resource):
                     pixelator(now, file.filename)
                 elif filters == '2':
                     liner(now, file.filename)
+                elif filters == '4':
+                    edges(now, file.filename)
                 else:
                     nihil(now, file.filename)
                 news.user_id = i.id
