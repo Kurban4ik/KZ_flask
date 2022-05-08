@@ -8,4 +8,5 @@ class NewsForm(FlaskForm):
     photo = FileField('Фото')
     f = SelectField(choices=[(1, 'pixelator'),
                              (2, 'liner'),
-                             (3, 'nihil')])
+                             (3, 'nihil'),
+                             (4, 'edges')])

@@ -1,7 +1,7 @@
 import os
 import random
 
-from PIL import Image
+from PIL import Image, ImageFilter
 
 
 def pixelator(date, file):
@@ -66,5 +66,10 @@ def nihil(date, file):
                     pix[x, y] = r + (change[0]) % 250, (g + change[0]) % 250, (b + change[0]) % 250,
                 else:
                     pix[x, y] = r + (change1[0]) % 250, (g + change1[0]) % 250, (b + change1[0]) % 250,
+
+
+def edges(date, file):
+    image = Image.open(f'static/inner/{date}/{file}').convert('RGB')
+    edges = image.filter(ImageFilter.FIND_EDGES)
     os.mkdir(f'static/images/{date}')
-    image.save(f'static/images/{date}/{file}')
+    edges.save(f'static/images/{date}/{file}')

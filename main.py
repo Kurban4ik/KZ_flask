@@ -6,7 +6,7 @@ from flask_login import LoginManager, login_user, login_required, logout_user, c
 from flask_restful import abort, Api
 
 from blueprints.api_blueprint import api_blueprint
-from changer import pixelator, liner, nihil
+from changer import pixelator, liner, nihil, edges
 from forms.photos import NewsForm
 from forms.user import RegisterForm, LoginForm
 from data.photos import News
@@ -97,6 +97,8 @@ def add_news():
             pixelator(now, file.filename)
         elif form.f.data == '2':
             liner(now, file.filename)
+        elif form.f.data == '4':
+            edges(now, file.filename)
         else:
             nihil(now, file.filename)
         news.filter = form.f.data
