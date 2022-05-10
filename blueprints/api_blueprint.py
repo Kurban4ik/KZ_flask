@@ -75,8 +75,6 @@ class NewsApi(Resource):
                 news.is_private = args['is_private']
                 news.created_date = datetime.datetime.now()
                 news.photo = now + file.filename
-                i.news.append(news)
-                db_sessi.merge(i)
                 return {'response': 'ok'}
 
 
