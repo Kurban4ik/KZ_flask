@@ -39,27 +39,30 @@ class NewsApi(Resource):
         return {'error': 'i shitted in my pants'}
 
     def post(self):
-        print(123)
         db_sessi = db_session.create_session()
         args = request.form
-        login = args['login']
-
-        password = args['password']
-
+        try:
+            login = args['login']
+            password = args['password']
+        except:
+            return {'response': 'no password or login'}
         for i in db_sessi.query(User).all():
             if i.check_password(password) and i.email == login:
-                print(i.email)
                 news = News()
-                file = request.files['file']
+                try:
+                    file = request.files['file']
+                except:
+                    return {'response': 'no photo given'}
                 # проверка на формат
-                print(file.filename)
                 if request.files["file"].filename.split('.')[-1] not in ['png', 'jpg', 'jpeg']:
                     return {'response': 'wrong format: png, jpg, jpeg allowed only'}
-                filters = args['filter']
+                try:
+                    filters = args['filter']
+                except:
+                    return {'response': 'no filter given'}
                 now = datetime.datetime.now()
                 now = str(now.day) + str(now.hour) + str(now.minute) + str(now.second)
-                print(i.email)
-                news.filter = filters
+                news.filter = int(filters)
                 news.user = i
                 os.mkdir(f'./static/inner/{now}')
                 file.save(os.path.join(f'./static/inner/{now}', file.filename))
@@ -69,13 +72,20 @@ class NewsApi(Resource):
                     liner(now, file.filename)
                 elif filters == '4':
                     edges(now, file.filename)
-                else:
+                elif filters == '3':
                     nihil(now, file.filename)
                 news.user_id = i.id
-                news.is_private = args['is_private']
+                news.is_private = int(args['is_private'])
                 news.created_date = datetime.datetime.now()
-                news.photo = now + file.filename
+                news.photo = now + '/' + file.filename
+                i.news.append(news)
+                db_sessi.add(news)
+                db_sessi.merge(i)
+                db_sessi.commit()
+                p
                 return {'response': 'ok'}
+            else:
+                return {'response': 'wrong password or login'}
 
 
 api.add_resource(NewsApi, '/api/news')

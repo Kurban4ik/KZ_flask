@@ -1,9 +1,11 @@
 import requests
-files = {
-    'file': open('unknown.png', 'rb')
-}
-data = {
+date = {
     'login': 'kira297@bk.ru',
-    'password': '123123'
+    'password': '123123',
+    'filter': '3',
+    'is_private': '0'
 }
-print(requests.post('http://127.0.0.1:5000/api/news', data=data, files=files).json())
+files = {
+    'file': open('rOjSxMVNU3mI5yq2ZZAr.jpg', 'rb')
+}
+print(requests.post('http://127.0.0.1:5000/api/news', data=date, files=files).json())

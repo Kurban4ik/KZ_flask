@@ -131,6 +131,8 @@ def index():
         news = db_sess.query(News).filter((News.user == current_user) | (News.is_private != True))
     else:
         news = db_sess.query(News).filter(News.is_private != True)
+    for i in news:
+        print(i.photo)
     return render_template("index.html", news=news)
 
 
