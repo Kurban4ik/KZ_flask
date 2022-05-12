@@ -82,7 +82,7 @@ class NewsApi(Resource):
                 db_sessi.add(news)
                 db_sessi.merge(i)
                 db_sessi.commit()
-                p
+
                 return {'response': 'ok'}
             else:
                 return {'response': 'wrong password or login'}

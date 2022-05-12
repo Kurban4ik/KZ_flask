@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
 import datetime
 import os
 
+from waitress import serve
 from flask import Flask, render_template, redirect, request, abort
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from flask_restful import abort, Api
@@ -74,7 +76,7 @@ def login():
 
 def main():
     db_session.global_init("db/blogs.db")
-    app.run()
+    serve(app, host='0.0.0.0', port=5000)
 
 
 @app.route('/news', methods=['GET', 'POST'])

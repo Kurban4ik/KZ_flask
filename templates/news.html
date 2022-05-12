@@ -9,7 +9,7 @@
             {{ form.photo() }}<br>
             {{ form.f }}
         </p>
-        <p>{{ form.is_private() }} {{ form.is_private.label }}</p>
+        <p class="form-check">{{ form.is_private() }} {{ form.is_private.label }}</p>
         <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
         {{ message }}
     </form>
