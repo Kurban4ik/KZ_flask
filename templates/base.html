@@ -5,7 +5,32 @@
    .fig {
     text-align: center; /* Выравнивание по центру */
    }
-  </style>
+   #navbar {
+  overflow: hidden;
+  background-color: #333;
+}
+
+#navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+#navbar a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+#navbar a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+    </style>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet"
@@ -16,18 +41,26 @@
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="#">Наше приложение</a>
+    <div id="navbar">
+        <a class="active" href="#">Unique Change</a>
+        <a href="/">Все</a>
+        <a href="/my_photos">Мои</a>
         {% if current_user.is_authenticated %}
-            <a class="navbar-brand" href="/logout">{{ current_user.name }}</a>
+        <a class="btn btn-warning" href="/logout">Выйти</a>
         {% else %}
-            <p>
-                <a class="btn btn-primary " href="/register">Зарегистрироваться</a>
-                <a class="btn btn-success" href="/login">Войти</a>
-            </p>
+        <p>
+            <a class="btn btn-primary " href="/register">Зарегистрироваться</a>
+            <a class="btn btn-success" href="/login">Войти</a>
+        </p>
         {% endif %}
-    </nav>
+    </div>
+    <!--    <nav class="navbar navbar-light bg-light">-->
+    <!--        <a class="navbar-brand" href="#"></a>-->
+    <!--        <a class="navbar-brand" href="/"></a>-->
+    <!--        <a class="navbar-brand" href="/my_photos"></a>-->
+    <!--    </nav>-->
 </header>
+
 <!-- Begin page content -->
 <main role="main" class="container">
     {% block content %}{% endblock %}

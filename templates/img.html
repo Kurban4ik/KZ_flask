@@ -1,1 +1,6 @@
-<a href="http://127.0.0.1:5000">назад</a><img src="{{url_for('static', filename='images/' + photo)}}" alt="">
+{% extends "base.html" %}
+{% block content %}
+<h1><a href="http://127.0.0.1:5000">назад</a></h1>
+<br>
+<img src="{{url_for('static', filename='images/' + photo)}}" alt="sdfsdf">
+{% endblock %}

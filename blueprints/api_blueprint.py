@@ -4,7 +4,7 @@ import os
 from flask import Blueprint, request
 from flask_restful import Api, Resource, reqparse
 
-from changer import pixelator, liner, nihil, edges
+from changer import ImageChange
 from data import db_session
 from data.photos import News
 from data.users import User
@@ -66,14 +66,16 @@ class NewsApi(Resource):
                 news.user = i
                 os.mkdir(f'./static/inner/{now}')
                 file.save(os.path.join(f'./static/inner/{now}', file.filename))
+                photod = ImageChange(now, file.filename)
                 if filters == '1':
-                    pixelator(now, file.filename)
+                    photod.pixelator()
                 elif filters == '2':
-                    liner(now, file.filename)
+                    photod.liner()
                 elif filters == '4':
-                    edges(now, file.filename)
+                    photod.edges()
                 elif filters == '3':
-                    nihil(now, file.filename)
+                    photod.nihil()
+                photod.save()
                 news.user_id = i.id
                 news.is_private = int(args['is_private'])
                 news.created_date = datetime.datetime.now()
