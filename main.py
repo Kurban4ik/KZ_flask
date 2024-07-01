@@ -76,7 +76,7 @@ def login():  # авторизация
 
 def main():
     db_session.global_init("db/blogs.db")
-    serve(app, port=5000)
+    serve(app, host='0.0.0.0', port=5000)
 
 
 @app.route('/news', methods=['GET', 'POST'])
