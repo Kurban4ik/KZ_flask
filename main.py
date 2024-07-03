@@ -75,7 +75,8 @@ def login():  # авторизация
 
 
 def main():
-    db_session.global_init("db/blogs.db")
+    dir = os.path.dirname(os.path.realpath(__file__)) + '/db/blogs.db'
+    db_session.global_init(dir)
     serve(app, host='0.0.0.0', port=5000)
 
 
