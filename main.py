@@ -5,6 +5,7 @@ import os
 from waitress import serve
 from flask import Flask, render_template, redirect, request, abort, send_from_directory, send_file
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+from prometheus_flask_exporter import PrometheusMetrics
 from flask_restful import abort
 from blueprints.api_blueprint import api_blueprint
 from changer import ImageChange
@@ -15,6 +16,8 @@ from data.users import User
 from data import db_session
 
 app = Flask(__name__)
+metrics = PrometheusMetrics(app)
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 
