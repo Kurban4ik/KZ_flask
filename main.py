@@ -75,8 +75,11 @@ def login():  # авторизация
 
 
 def main():
+    cur_dir = os.path.dirname(os.path.realpath(__file__))
+    print(cur_dir)
     db_session.global_init("db/blogs.db")
-    serve(app, port=5000)
+    app.run()
+    #serve(app, port=5000)
 
 
 @app.route('/news', methods=['GET', 'POST'])
@@ -162,9 +165,9 @@ def my_photos_page():  # просмотр только своих изображ
             txt = 'Вы ещё ничего не загрузили'
         else:
             txt = ''
+        return render_template("index.html", news=news[::-1], txt=txt)
     else:
         abort(404)
-    return render_template("index.html", news=news[::-1], txt=txt)
 
 
 @app.route('/download/<path:filename>/')

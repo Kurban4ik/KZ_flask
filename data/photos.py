@@ -14,4 +14,4 @@ class News(SqlAlchemyBase):
     photo = sqlalchemy.Column(sqlalchemy.String, nullable=False, default=id)
     user_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("users.id"))
     filter = sqlalchemy.Column(sqlalchemy.String, default='None')
-    user = orm.relation('User')
+    user = sqlalchemy.orm.relationship('User')
